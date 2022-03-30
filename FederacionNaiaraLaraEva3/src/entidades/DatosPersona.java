@@ -1,19 +1,37 @@
 package entidades;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import utils.Datos;
 import utils.Utilidades;
 import validaciones.Validaciones;
 
-public class DatosPersona {
+public class DatosPersona implements Comparable<Documentacion> {
+
+	// Examen 9, ejercicio 2, apartado A
+	@Override
+	public int compareTo(Documentacion o) {
+
+		return this.getFechaNac().compareTo(this.getFechaNac());
+//		if (this.getFechaNac()!= null)
+//			return o.mostrar().compareTo(o.mostrar());
+	}
+
 	private long id;
 	private String nombre;
 	private String telefono;
 	private LocalDate fechaNac;
 
-	private Documentacion nifnie; //Examen 2 Ejercicio 3.2
+	private Documentacion nifnie; // Examen 2 Ejercicio 3.2
 
 	public DatosPersona(long id, String nombre, String telefono, LocalDate fechaNac) {
 		super();
@@ -22,8 +40,8 @@ public class DatosPersona {
 		this.telefono = telefono;
 		this.fechaNac = fechaNac;
 	}
-	
-	//Examen 2 Ejercicio 3.2
+
+	// Examen 2 Ejercicio 3.2
 	public DatosPersona(long id, String nombre, String telefono, LocalDate fechaNac, Documentacion nifnie) {
 		super();
 		this.id = id;
@@ -134,4 +152,88 @@ public class DatosPersona {
 		return ret;
 	}
 
+	// Examen 9, ejercicio 1, apartado A
+
+	public String data() {
+		return "" + this.getId() + "|" + this.getNombre() + "|" + this.getTelefono() + "|"
+				+ this.getFechaNac().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "|"
+				+ this.getNifnie().mostrar();
+
+	}
+
+	// Examen 9, ejercicio 1, apartado C
+
+	public static void exportarPersonas() {
+		String path = "atletas_alfabetico.txt";
+		File fichero = new File(path);
+		FileWriter escritor = null;
+		PrintWriter buffer = null;
+		try {
+			try {
+				escritor = new FileWriter(fichero, false);
+				buffer = new PrintWriter(escritor);
+				for (DatosPersona dp : Datos.PERSONAS) {
+					buffer.println(dp.data());
+				}
+			} finally {
+				if (buffer != null) {
+					buffer.close();
+				}
+				if (escritor != null) {
+					escritor.close();
+				}
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Se ha producido una FileNotFoundException" + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Se ha producido una IOException" + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("Se ha producido una Exception" + e.getMessage());
+		}
+	}
+
+	private static void mostrarPersonas() {
+		File fichero = new File("atletas_alfabetico.txt");
+		FileReader lector = null;
+		BufferedReader buffer = null;
+		try {
+			try {
+				lector = new FileReader(fichero);
+				buffer = new BufferedReader(lector);
+				String linea;
+				while ((linea = buffer.readLine()) != null) {
+					String[] campos = linea.split("\\|");
+					// <idPersona> | <nombre> | <telefono> | <fechaNac(dd/MM/YYYY)> | <NIFNIE>
+					String DatosPersona_id = campos[0];
+					String DatosPersona_nombre = campos[1];
+					String DatosPersona_telefono = campos[2];
+					String DatosPersona_fechaNac = campos[3];
+					String datosPersona_nifnie = campos[4];
+
+					for (DatosPersona dp : Datos.PERSONAS) {
+						String data = "";
+						data += "\t" + dp.toString() + "\n";
+						System.out.println(data);
+					}
+				}
+
+			} finally {
+				if (buffer != null) {
+					buffer.close();
+				}
+				if (lector != null) {
+					lector.close();
+				}
+			}
+		} catch (
+
+		FileNotFoundException e) {
+			System.out.println("Se ha producido una FileNotFoundException" + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Se ha producido una IOException" + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("Se ha producido una Exception" + e.getMessage());
+		}
+
+	}
 }
