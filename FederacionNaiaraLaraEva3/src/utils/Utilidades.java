@@ -4,6 +4,7 @@ import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -106,7 +107,7 @@ public class Utilidades extends Validaciones {
 		return ret;
 	}
 
-	//Examen 3 Ejercicio 1
+	// Examen 3 Ejercicio 1
 	/**
 	 * Función que pide al usuario que introduce un valor para una fecha a partir de
 	 * 3 enteros para el día, mes y año respectivamente Y una hora a partir de ptrps
@@ -154,7 +155,7 @@ public class Utilidades extends Validaciones {
 		return ret;
 	}
 
-	//Examen 4 Ejercicio 1
+	// Examen 4 Ejercicio 1
 	/**
 	 * Función que quita los espacios en blanco del comienzo y del final de una
 	 * cadena de caracteres que se pasa como parámetro y, además, sustituye todas
@@ -176,7 +177,7 @@ public class Utilidades extends Validaciones {
 		return Normalizer.normalize(string, Form.NFC).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 	}
 
-	//Examen 5 Ejercicio 1
+	// Examen 5 Ejercicio 1
 	/**
 	 * Función que pide al usuario que introduzca un valor decimal por la entrada
 	 * estándar. Si el formato introducido no es correcto o fuera de rango, o si se
@@ -214,5 +215,34 @@ public class Utilidades extends Validaciones {
 			}
 		} while (!correcto);
 		return Float.parseFloat("" + ret);
+	}
+
+	// Examen 10, ejercicio 1
+	// Formato de la Hora (HH:mm:ss)
+	public static java.time.LocalTime leerHora() {
+		LocalTime ret = null;
+		int hora, min, seg;
+		boolean correcto = false;
+		Scanner in;
+		do {
+			System.out.println("Introduzca un valor para la hora (0...23)");
+			in = new Scanner(System.in, "ISO-8859-1");
+			hora = in.nextInt();
+			System.out.println("Introduzca un valor para los minutos (0...59)");
+			in = new Scanner(System.in, "ISO-8859-1");
+			min = in.nextInt();
+			System.out.println("Introduzca un valor para los segundos (0...59)");
+			in = new Scanner(System.in, "ISO-8859-1");
+			seg = in.nextInt();
+			try {
+				ret = LocalTime.of(hora, min, seg);
+				correcto = true;
+			} catch (Exception e) {
+				System.out.println("Hora introducida incorrecta.");
+				correcto = false;
+			}
+		} while (!correcto);
+		return ret;
+
 	}
 }

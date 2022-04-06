@@ -3,6 +3,7 @@ package entidades;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
 
 import utils.Utilidades;
@@ -18,6 +19,24 @@ public class Prueba {
 	private Colegiado[] arbitraje = new Colegiado[3];
 	private Resultado resultado = null;
 	private Participante[] participantes;
+
+	// Examen 10, ejercicio 3 apartado A
+	private static Patrocinador[] patrocinador;
+
+	/* Para relacion 1-N con Patrocinador */
+	public Patrocinador newPatrocinador() {
+		Patrocinador ret = new Patrocinador();
+		ret = Patrocinador.newPatrocinador();
+		return ret;
+	}
+	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind, Patrocinador[] patrocinador) {
+		this.id = id;
+		this.nombre = nombre;
+		this.fecha = fecha;
+		this.lugar = lugar;
+		this.individual = ind;
+		this.patrocinador=patrocinador;
+	}
 
 	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind) {
 		this.id = id;
@@ -124,6 +143,17 @@ public class Prueba {
 		this.lugar = lugar;
 	}
 
+	// Examen 10, ejercicio 3 apartado A
+	// metodos getters y setters del Patrocinador
+
+	public static Patrocinador[] getPatrocinador() {
+		return patrocinador;
+	}
+
+	public void setPatrocinador(Patrocinador[] patrocinador) {
+		this.patrocinador = patrocinador;
+	}
+
 	/**
 	 * Función que establece el equipo arbitral de la prueba (3 colegiados)
 	 * 
@@ -202,9 +232,9 @@ public class Prueba {
 		}
 	}
 
-	///Examen 6 Ejercicio 4
+	/// Examen 6 Ejercicio 4
 	/***
-	 * Función que devuelve una cadena de caracteres con la siguiente estructura: 
+	 * Función que devuelve una cadena de caracteres con la siguiente estructura:
 	 * <idPrueba>”. ”<nombre>” (”<fecha(dd/mm/YYYY)>” en <lugarPrueba>) de tipo “
 	 * <individual/colectiva>“ Si la prueba dispone de equipo arbitral, se mostrarán
 	 * los nombres del equipo arbitral. Además, si está cerrada, se mostrará el
@@ -218,16 +248,26 @@ public class Prueba {
 	@Override
 	public String toString() {
 		String ret = "";
-		ret += "" + id + "." + nombre + " (" + fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " en " + lugar.getNombre() + ") de tipo " + (this.isIndividual()?"individual":"colectiva")+"\n";
-		if(this.hayEquipoArbitral()) {
+		ret += "" + id + "." + nombre + " (" + fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " en "
+				+ lugar.getNombre() + ") de tipo " + (this.isIndividual() ? "individual" : "colectiva") + "\n";
+//Examen 10, ejercicio 3 apartado A
+		for (Patrocinador p : patrocinador) {
+			ret += p.getNombrePatrocinador() + "" + p.getNombrePatrocinador() + "" + p.getWeb() + "" + p.getDotacion() + "\n";
+
+		}
+
+		if (this.hayEquipoArbitral()) {
 			ret += this.nombresEquipoArbitral();
 		}
-		if(this.cerrada()) {
+		if (this.cerrada()) {
 			Resultado res = this.getResultado();
 			Participante[] podio = res.getPodio();
-			ret += "Primer puesto:"+ podio[0].getId()+", con el dorsal" + podio[0].getDorsal()+" por la calle "+ podio[0].getCalle()+" Oro#"+ res.getPrimero().getId()+"\n";
-			ret += "Segundo puesto:"+ podio[1].getId()+", con el dorsal" + podio[1].getDorsal()+" por la calle "+ podio[1].getCalle()+" Oro#"+ res.getSegundo().getId()+"\n";
-			ret += "Tercer puesto:"+ podio[2].getId()+", con el dorsal" + podio[2].getDorsal()+" por la calle "+ podio[2].getCalle()+" Oro#"+ res.getTercero().getId()+"\n";
+			ret += "Primer puesto:" + podio[0].getId() + ", con el dorsal" + podio[0].getDorsal() + " por la calle "
+					+ podio[0].getCalle() + " Oro#" + res.getPrimero().getId() + "\n";
+			ret += "Segundo puesto:" + podio[1].getId() + ", con el dorsal" + podio[1].getDorsal() + " por la calle "
+					+ podio[1].getCalle() + " Oro#" + res.getSegundo().getId() + "\n";
+			ret += "Tercer puesto:" + podio[2].getId() + ", con el dorsal" + podio[2].getDorsal() + " por la calle "
+					+ podio[2].getCalle() + " Oro#" + res.getTercero().getId() + "\n";
 		}
 		return ret;
 	}
@@ -239,6 +279,7 @@ public class Prueba {
 		long id = -1;
 		String nombre = "";
 		Lugar lugar;
+		Patrocinador patrocinador = null; // Examen 10, ejercicio 3 apartado A
 		boolean valido = false;
 		do {
 			System.out.println("Introduzca el id de la nueva prueba:");
@@ -280,8 +321,20 @@ public class Prueba {
 				valido = true;
 		} while (!valido);
 		lugar = Lugar.values()[idLugar];
+		
+		System.out.println("Introduzca los datos del patrocinador de la prueba ()");
+		do {
+			System.out.println("Introduzca el nombre del nuevo patrocinador:");
+			in = new Scanner(System.in);
+			valido = Validaciones.validarNombre(nombre);
+			if (!valido)
+				System.out.println("ERROR: Valor introducido para el nombre del patrocinador inválido.");
+			else
+				valido = true;
+		} while (!valido);
+		valido = false;
 
-		ret = new Prueba(id, nombre, fecha, lugar, ind);
+		ret = new Prueba(id, nombre, fecha, lugar, ind, getPatrocinador());
 		return ret;
 	}
 

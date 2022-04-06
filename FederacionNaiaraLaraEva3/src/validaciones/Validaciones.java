@@ -12,6 +12,8 @@ import entidades.NIF;
 //Examen 5 Ejercicio 3
 public class Validaciones {
 
+
+
 	/**
 	 * Valida que una cadena de caracteres contiene dígitos únicamente
 	 * 
@@ -29,13 +31,15 @@ public class Validaciones {
 	 * @param nombre cadena con el nombre a validar
 	 * @return true si es un nombre válido o false en caso contrario
 	 */
+
+	// cambio en el metodo validarNombre (maximo caracteres=150) y para validar digitos del 0 al 9
 	public static boolean validarNombre(String nombre) {
 		// regEx general para cadena de caracteres con longitud entre 1 y 50 caracteres,
 		// aceptando dígitos, letras MAYUS y minúsculas, con tildes, diréresis y
 		// diferentes símbolos especiales
 		// Pattern patron = Pattern.compile("[
 		// 0-9A-Za-zñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ¡!¿?@#$%()=+-€/.,]{1,50}");
-		Pattern patron = Pattern.compile("[ A-Za-zñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ-]{3,50}");
+		Pattern patron = Pattern.compile("[ A-Za-zñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ-0-1-2-3-4-5-6-7-8-9]{3,150}");
 		Matcher comprobacion = patron.matcher(nombre);
 		return comprobacion.matches();//
 	}
@@ -169,8 +173,26 @@ public class Validaciones {
 	public static boolean validarAnio(int anio) {
 		return (anio > 0);
 	}
-	
+
 	public static boolean validarNombreEquipo(String nombre) {
-		return false; //TO-DO
+		return false; // TO-DO
+	}
+//validadores web y dotacion para ele ejercicio 2 del examen 10
+	public static boolean validarWeb(String web) {
+		return false;
+	}
+
+	public static boolean Dotacion(double euros) {
+		return (euros>0.0);
+	}
+
+	
+	public static boolean horarioIni(){
+		return false;
+	}
+
+	public static boolean horarioFin() {
+		
+		return false;
 	}
 }
