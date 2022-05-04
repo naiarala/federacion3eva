@@ -195,4 +195,9 @@ public class Validaciones {
 		
 		return false;
 	}
+	
+//	public static boolean validarTiempoTotal(int TiempoTotal) {
+//		return (TiempoTotal > 0);
+//	}
+
 }

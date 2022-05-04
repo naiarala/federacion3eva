@@ -1,5 +1,6 @@
 package entidades;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import java.util.Scanner;
 import utils.Utilidades;
 import validaciones.Validaciones;
 
-public class Prueba {
+public class Prueba implements Serializable, Comparable<Prueba> {
 	private long id;
 	private String nombre;
 	private LocalDate fecha; // solo fecha
@@ -29,13 +30,14 @@ public class Prueba {
 		ret = Patrocinador.newPatrocinador();
 		return ret;
 	}
+
 	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind, Patrocinador[] patrocinador) {
 		this.id = id;
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.lugar = lugar;
 		this.individual = ind;
-		this.patrocinador=patrocinador;
+		this.patrocinador = patrocinador;
 	}
 
 	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind) {
@@ -252,7 +254,8 @@ public class Prueba {
 				+ lugar.getNombre() + ") de tipo " + (this.isIndividual() ? "individual" : "colectiva") + "\n";
 //Examen 10, ejercicio 3 apartado A
 		for (Patrocinador p : patrocinador) {
-			ret += p.getNombrePatrocinador() + "" + p.getNombrePatrocinador() + "" + p.getWeb() + "" + p.getDotacion() + "\n";
+			ret += p.getNombrePatrocinador() + "" + p.getNombrePatrocinador() + "" + p.getWeb() + "" + p.getDotacion()
+					+ "\n";
 
 		}
 
@@ -321,7 +324,7 @@ public class Prueba {
 				valido = true;
 		} while (!valido);
 		lugar = Lugar.values()[idLugar];
-		
+
 		System.out.println("Introduzca los datos del patrocinador de la prueba ()");
 		do {
 			System.out.println("Introduzca el nombre del nuevo patrocinador:");
@@ -338,4 +341,18 @@ public class Prueba {
 		return ret;
 	}
 
+	// Examen 11, Ejercicio 2, eval 2, apartado A
+	@Override
+	public int compareTo(Prueba p2) {
+		if (this.getFecha().isAfter(p2.getFecha()))
+			return -1;
+		else if (this.getFecha().isBefore(p2.getFecha()))
+			return 1;
+//		else {
+//			return this.isIndividual().compareTo(p2.isIndividual());
+//		}
+
+		return 0;
+
+	}
 }
