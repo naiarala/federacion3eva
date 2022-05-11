@@ -1,7 +1,6 @@
 package entidades;
 
 import java.util.Scanner;
-
 import utils.Datos;
 import utils.Utilidades;
 import validaciones.Validaciones;
@@ -12,6 +11,9 @@ public class Atleta extends Participante {
 	private float peso;
 
 	private DatosPersona persona;
+
+	public Atleta() {
+	}
 
 	public Atleta(long id, int dorsal, char calle, long idAtleta, float altura, float peso) {
 		super(id, dorsal, calle);
@@ -45,16 +47,6 @@ public class Atleta extends Participante {
 		this.persona = Datos.buscarPersonaPorId(a.idAtleta);
 	}
 
-	@Override
-	public long getId() {
-		return idAtleta;
-	}
-
-	@Override
-	public void setId(long id) {
-		this.idAtleta = id;
-	}
-
 	public float getAltura() {
 		return altura;
 	}
@@ -75,6 +67,19 @@ public class Atleta extends Participante {
 		return this.persona;
 	}
 
+	public void setPersona(DatosPersona persona) {
+		this.persona = persona;
+	}
+	
+	public long getIdAtleta() {
+		return idAtleta;
+	}
+
+	public void setIdAtleta(long idAtleta) {
+		this.idAtleta = idAtleta;
+	}
+
+
 	// Examen 5 Ejercicio 5
 	/***
 	 * Función que pregunta al usuario por cada uno de los campos para un nuevo
@@ -87,7 +92,6 @@ public class Atleta extends Participante {
 		long id = -1;
 		float altura = 0.0F;
 		float peso = 0.0F;
-		int elecc = -1;
 		DatosPersona dp = null;
 		Scanner in;
 		boolean valido = false;
@@ -137,5 +141,7 @@ public class Atleta extends Participante {
 		return "" + persona.getNombre() + " (" + persona.getNifnie().mostrar() + ") del año "
 				+ persona.getFechaNac().getYear() + "\t" + peso + "Kgs. " + altura + "m.";
 	}
+
+	
 
 }
