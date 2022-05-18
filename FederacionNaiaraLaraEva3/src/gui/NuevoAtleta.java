@@ -19,6 +19,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import dao.AtletaDAO;
+import dao.EquipoDAO;
 import dao.PatrocinadorDAO;
 import dao.PruebaDAO;
 import entidades.Atleta;

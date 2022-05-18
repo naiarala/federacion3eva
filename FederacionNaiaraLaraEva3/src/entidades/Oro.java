@@ -7,7 +7,7 @@ import utils.Utilidades;
 import validaciones.Validaciones;
 
 public class Oro extends Metal {
-	private long id;
+	private  static long id;
 	private float pureza; // % pureza
 	// Ejercicio 5, parte B
 	static private float maxPureza;
@@ -34,7 +34,7 @@ public class Oro extends Metal {
 		this.fecha = fecha;
 	}
 
-	public long getId() {
+	public static long getId() {
 		return id;
 	}
 

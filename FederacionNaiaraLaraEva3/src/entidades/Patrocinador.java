@@ -205,7 +205,11 @@ public class Patrocinador implements Comparator<Patrocinador>{
 		return ret;
 
 	}
-
+	public String mostrarBasico() {
+		String ret = "";
+		ret += this.id + ". " + this.nombre + (!this.web.equals("") ? " " + web : " ");
+		return ret;
+	}
 
 
 

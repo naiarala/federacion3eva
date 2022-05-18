@@ -355,4 +355,9 @@ public class Prueba implements Serializable, Comparable<Prueba> {
 		return 0;
 
 	}
+
+	public void setPatrocinador(Patrocinador patrocinador2) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -40,11 +40,11 @@ public class Tiempo implements Serializable, Comparable<Tiempo> {
 
 	// getters y setters
 
-	public int getHora() {
+	public int getHoras() {
 		return hora;
 	}
 
-	public void setHora(int hora) {
+	public void setHoras(int hora) {
 		this.hora = hora;
 	}
 
@@ -76,7 +76,7 @@ public class Tiempo implements Serializable, Comparable<Tiempo> {
 	@Override
 	public String toString() {
 
-		return "" + "horas:" + this.getHora() + "minutos" + this.getMinutos() + "segundos" + this.getSegundos()
+		return "" + "horas:" + this.getHoras() + "minutos" + this.getMinutos() + "segundos" + this.getSegundos()
 				+ "centesimas" + this.getCentesimas();
 
 	}
